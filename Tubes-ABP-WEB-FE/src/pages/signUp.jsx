@@ -1,17 +1,50 @@
-import React from 'react';
-import signupLogo from '../assets/signup.png'
+import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import signupLogo from '../assets/signup.png';
 
 export default function SignUp() {
+  const [fullname, setFullname] = useState('');
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+
+  const handleSignup = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch('http://localhost:8001/api/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Accept: 'application/json',
+        },
+        body: JSON.stringify({
+          name: fullname, // make sure your Laravel controller expects "name"
+          email,
+          password,
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        alert('Signup successful!');
+        navigate('/login');
+      } else {
+        alert(data.message || 'Signup failed');
+      }
+    } catch (error) {
+      alert('Error connecting to server');
+      console.error(error);
+    }
+  };
+
   return (
     <div className="min-h-screen flex items-center justify-center bg-white font-sans">
       <div className="w-full max-w-6xl flex flex-col md:flex-row">
         {/* Left Section */}
         <div className="flex-1 flex flex-col justify-center items-center px-8 py-12">
-          <img
-            src={signupLogo}
-            alt="Signup Illustration"
-            className="w-3/5 mb-10"
-          />
+          <img src={signupLogo} alt="Signup Illustration" className="w-3/5 mb-10" />
           <p className="text-center text-[#073E81] italic text-lg font-medium leading-relaxed">
             "Sign up and stay ahead. With Instannews, customize<br />
             your news experience and stay informed on your<br />
@@ -32,7 +65,7 @@ export default function SignUp() {
               </a>
             </p>
 
-            <form>
+            <form onSubmit={handleSignup}>
               <div className="mb-4">
                 <label htmlFor="fullname" className="block font-medium mb-1">
                   Full Name
@@ -40,8 +73,11 @@ export default function SignUp() {
                 <input
                   type="text"
                   id="fullname"
-                  placeholder="Enter your first name"
+                  value={fullname}
+                  onChange={(e) => setFullname(e.target.value)}
+                  placeholder="Enter your full name"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-500 focus:outline-none focus:border-[#0047AB]"
+                  required
                 />
               </div>
 
@@ -52,8 +88,11 @@ export default function SignUp() {
                 <input
                   type="email"
                   id="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
                   placeholder="Enter your email address"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-500 focus:outline-none focus:border-[#0047AB]"
+                  required
                 />
               </div>
 
@@ -64,8 +103,11 @@ export default function SignUp() {
                 <input
                   type="password"
                   id="password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
                   placeholder="Enter your password"
                   className="w-full px-4 py-3 border border-gray-300 rounded-lg shadow-sm placeholder-gray-500 focus:outline-none focus:border-[#0047AB]"
+                  required
                 />
               </div>
 
