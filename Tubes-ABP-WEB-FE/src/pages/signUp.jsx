@@ -19,7 +19,7 @@ export default function SignUp() {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          name: fullname, // make sure your Laravel controller expects "name"
+          name: fullname,
           email,
           password,
         }),
@@ -52,7 +52,7 @@ export default function SignUp() {
           </p>
         </div>
 
-        {/* Right Section */}
+
         <div className="flex-1 flex flex-col justify-center px-8 py-12">
           <div className="max-w-md w-full mx-auto">
             <h1 className="text-3xl font-bold text-[#00569C] mb-2 text-center">
