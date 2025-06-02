@@ -23,11 +23,10 @@ export default function Login() {
       const data = await response.json();
 
       if (response.ok) {
-        // Example: Save token (adjust depending on your backend)
         localStorage.setItem("token", data.token);
 
         alert("Login successful!");
-        navigate("/home"); // or wherever you want to redirect
+        navigate("/home");
       } else {
         alert(data.message || "Login failed");
       }
@@ -40,7 +39,6 @@ export default function Login() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-white font-sans">
       <div className="flex flex-col md:flex-row max-w-6xl w-full h-auto md:h-[600px]">
-        {/* Left Section */}
         <div className="hidden md:flex flex-1 flex-col justify-center items-center px-8 py-12">
           <img
             src={megaphoneLogo}
@@ -52,8 +50,6 @@ export default function Login() {
             get the news you need, the way you want."
           </p>
         </div>
-
-        {/* Right Section */}
         <div className="flex-1 flex flex-col justify-center px-8 py-12">
           <div className="w-full max-w-md mx-auto">
             <h1 className="text-2xl md:text-3xl font-bold text-[#00569C] mb-1 text-center">
